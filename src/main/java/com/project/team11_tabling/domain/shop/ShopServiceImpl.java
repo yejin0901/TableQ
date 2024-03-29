@@ -2,7 +2,6 @@ package com.project.team11_tabling.domain.shop;
 
 import com.project.team11_tabling.domain.shop.externalAPI.KakaoAPI;
 import com.project.team11_tabling.domain.shop.externalAPI.KakaoResponseDTO;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -23,7 +22,6 @@ public class ShopServiceImpl implements ShopService{
     KakaoResponseDTO response = kakaoAPI.getAPI(search);
     return response;
   }
-
 
   public ShopResponseDto registerShop(ShopRequestDto requestDto) {
     Shop shop = new Shop(requestDto);
@@ -48,4 +46,5 @@ public class ShopServiceImpl implements ShopService{
 
     return date;
   }
+
 }

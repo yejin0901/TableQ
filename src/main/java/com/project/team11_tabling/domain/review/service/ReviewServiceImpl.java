@@ -1,4 +1,7 @@
 package com.project.team11_tabling.domain.review.service;
+
+import static com.project.team11_tabling.domain.booking.entity.BookingType.DONE;
+
 import com.project.team11_tabling.domain.booking.entity.Booking;
 import com.project.team11_tabling.domain.booking.repository.BookingRepository;
 import com.project.team11_tabling.domain.review.dto.request.ReviewCreateRequestDto;
