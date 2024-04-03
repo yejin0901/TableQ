@@ -51,19 +51,20 @@ public class Booking extends Timestamp {
   @Column(nullable = false)
   private Integer reservedParty;
 
-  public static Booking of(BookingRequest request, Long ticketNumber, Long userId) {
+  public static Booking of(BookingRequest request, Long ticketNumber, Long userId,
+      BookingType type) {
     return Booking.builder()
         .shopId(request.getShopId())
         .userId(userId)
         .ticketNumber(ticketNumber)
-        .state(BookingType.WAITING)
+        .state(type)
         .reservedDatetime(request.getReservedDatetime())
         .reservedParty(request.getReservedParty())
         .build();
   }
 
-  public void completeBooking(BookingType type) {
-    this.state = type;
+  public void noShow() {
+    this.state = BookingType.NOSHOW;
   }
 
   public void cancelBooking() {
