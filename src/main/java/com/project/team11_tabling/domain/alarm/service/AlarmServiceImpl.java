@@ -65,7 +65,7 @@ public class AlarmServiceImpl implements AlarmService {
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
-        emitter.complete();
+      emitter.complete();
     }
   }
 
