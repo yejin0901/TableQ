@@ -19,7 +19,4 @@ else
 fi
 
 echo "> Deploy - $JAR_PATH "
-nohup java -jar \
-    -Dspring.config.location=classpath:/application.properties
-    -Dspring.profiles.active=real \
-    $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
+nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
