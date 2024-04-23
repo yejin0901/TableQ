@@ -18,5 +18,5 @@ else
   sleep 5
 fi
 
-nohup java -jar /home/ec2-user/tabling/build/libs/team11_tabling-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev 
+nohup java -jar /home/ec2-user/tabling/build/libs/team11_tabling-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev &
 
