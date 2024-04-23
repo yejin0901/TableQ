@@ -18,4 +18,4 @@ else
   sleep 5
 fi
 
-nohup java -jar /home/ec2-user/tabling/build/libs/team11_tabling-0.0.1-SNAPSHOT.jar > nohup.out 2>&1 &
+BUILD_ID=dontKillMe nohup java -jar /home/ec2-user/tabling/build/libs/team11_tabling-0.0.1-SNAPSHOT.jar > nohup.out 2>&1 &
