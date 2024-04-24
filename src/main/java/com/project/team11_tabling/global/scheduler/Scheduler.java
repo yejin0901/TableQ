@@ -40,6 +40,7 @@ public class Scheduler {
   private final DataSource dataSource;
   private final PopularShopBatch popularShopBatch;
 
+
   @Scheduled(fixedDelay = 30000)
   public void addAvailableSeat() {
     log.info("addAvailableSeat");
@@ -55,6 +56,7 @@ public class Scheduler {
 
     eventPublisher.publishEvent(new CallingEvent());
   }
+
 
   @Scheduled(cron = "0 0 1 * * *", zone = "Asia/Seoul")
   public void weeklyBooking() {
@@ -74,6 +76,7 @@ public class Scheduler {
     }
   }
 
+
   @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
   public void weeklyUpdateUser() {
     Map<String, JobParameter<?>> confMap = new HashMap<>();
@@ -91,6 +94,7 @@ public class Scheduler {
       log.error(e.getMessage());
     }
   }
+
 
   @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
   public void weeklyPopularShop() {
