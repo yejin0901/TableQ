@@ -18,6 +18,7 @@ public class Scheduler {
   private final ShopSeatsRepository shopSeatsRepository;
   private final ApplicationEventPublisher eventPublisher;
 
+
   @Scheduled(fixedDelay = 30000)
   public void addAvailableSeat() {
     log.info("addAvailableSeat");
@@ -33,4 +34,5 @@ public class Scheduler {
 
     eventPublisher.publishEvent(new CallingEvent());
   }
+
 }
