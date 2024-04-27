@@ -76,6 +76,7 @@ public class BookingRepositoryQueryImpl implements BookingRepositoryQuery {
 
 
 
+
   private static StringTemplate getDateStringTemplate() {
     return Expressions.stringTemplate(
         "DATE_FORMAT({0}, {1})",
