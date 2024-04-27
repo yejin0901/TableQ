@@ -74,6 +74,7 @@ public class BookingRepositoryQueryImpl implements BookingRepositoryQuery {
     return findBooking == null ? Optional.empty() : Optional.of(findBooking);
   }
 
+
   @Override
   public Optional<Set<Booking>> findByUserIdAndShopIdAndState(Long userId, Long shopId,
       BookingType DONE) {
