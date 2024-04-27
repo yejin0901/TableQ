@@ -13,7 +13,6 @@ public interface BookingRepositoryQuery {
 
   Optional<Booking> findBookingByUserId(Long userId);
 
-  Optional<Set<Booking>> findByUserIdAndShopIdAndState(Long userId,Long shopId, BookingType DONE);
 
 
 }
