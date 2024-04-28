@@ -42,7 +42,7 @@ public class BookingRepositoryQueryImpl implements BookingRepositoryQuery {
   @Override
   public Optional<Booking> findByShopIdAndUserId(Long shopId, Long userId) {
 
-    StringTemplate dateStringTemplate = getDateStringTemplate();
+
     Booking findBooking =
         factory.select(booking)
             .from(booking)
@@ -50,16 +50,14 @@ public class BookingRepositoryQueryImpl implements BookingRepositoryQuery {
                 booking.state.eq(BookingType.WAITING)
                     .and(booking.userId.eq(userId))
                     .and(booking.shopId.eq(shopId))
-                    .and(dateStringTemplate.eq(String.valueOf(LocalDate.now())))
             )
-            .fetchFirst();
+            .fetchOne();
 
     return findBooking == null ? Optional.empty() : Optional.of(findBooking);
   }
 
   @Override
   public Optional<Booking> findBookingByUserId(Long userId) {
-    StringTemplate dateStringTemplate = getDateStringTemplate();
 
     Booking findBooking =
         factory.select(booking)
@@ -67,7 +65,6 @@ public class BookingRepositoryQueryImpl implements BookingRepositoryQuery {
             .where(
                 booking.state.eq(BookingType.WAITING)
                     .and(booking.userId.eq(userId))
-                    .and(dateStringTemplate.eq(String.valueOf(LocalDate.now())))
             )
             .fetchFirst();
 
