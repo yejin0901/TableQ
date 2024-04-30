@@ -76,8 +76,10 @@ public class ShopServiceImpl implements ShopService {
   public ShopResponseDto getShopInfo(Long id) {
     Shop shop = shopRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당가게 정보가 없습니다."));
     ShopResponseDto responseDto = new ShopResponseDto(shop);
+
     responseDto.updateWaitingNum(waitingQueueService.getWaitingQueueSize(id));
     System.out.println(responseDto.getWaitingNum());
+
     return responseDto;
   }
 
