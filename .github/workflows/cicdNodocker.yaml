@@ -1,8 +1,8 @@
 name: Plug project CICD
 
+
 on:
-  pull_request:
-    types: [ closed ]
+  push:
     branches: [ "master" ]
 #------------------------------------------------
 env:
