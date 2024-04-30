@@ -23,7 +23,7 @@ public class AlarmServiceImpl implements AlarmService {
   private final AlarmSseEmitterRepository alarmSseEmitterRepository;
   private final UserRepository userRepository;
   private static final Long DEFAULT_TIMEOUT = 600L * 1000 * 60;
-  private static final Long COMPLETE_TIMEOUT = 10L * 10000;
+  private static final Long COMPLETE_TIMEOUT = 600L * 1000 * 60;
 
   private static final String WAITING_MESSAGE = " 손님의 줄서기가 시작되었습니다. 알람이 올때 까지 기다려주세요.";
 
