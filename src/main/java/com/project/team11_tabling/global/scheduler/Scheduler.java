@@ -19,7 +19,7 @@ public class Scheduler {
   private final ApplicationEventPublisher eventPublisher;
 
 
-  @Scheduled(fixedDelay = 100000)
+  @Scheduled(fixedDelay = 50000)
   public void addAvailableSeat() {
     log.info("addAvailableSeat");
 
