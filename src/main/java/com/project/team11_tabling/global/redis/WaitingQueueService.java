@@ -7,7 +7,12 @@ import com.project.team11_tabling.global.event.CallingEvent;
 import com.project.team11_tabling.global.event.CancelEvent;
 import com.project.team11_tabling.global.event.DoneEvent;
 import com.project.team11_tabling.global.event.WaitingEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,67 +27,69 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 public class WaitingQueueService {
 
-  private final StringRedisTemplate redisTemplate;
-  private final ApplicationEventPublisher eventPublisher;
+  private final RedisTemplate<String, String> redisTemplate;
+  private final RedissonClient redissonClient;
   private final RealtimeWaitingDataService realtimeWaitingDataService;
-  private static final String WAITING_QUEUE_SUFFIX = "-shop";
 
-  @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
-  public void addWaitingQueue(WaitingEvent waitingEvent) {
-    Long shopId = waitingEvent.getShopId();
-    Long userId = waitingEvent.getUserId();
-
-    log.info("addWaitingQueue:: shopId = {}, userId = {}", shopId, userId);
-
-    redisTemplate.opsForList().rightPush(shopId + WAITING_QUEUE_SUFFIX, String.valueOf(userId));
-
-
-    sendJsonMessage(shopId, "wait"); // redis publisher
-
+  public WaitingQueue(RedissonClient redissonClient, RedisTemplate<String, String> redisTemplate) {
+    this.redissonClient = redissonClient;
+    this.redisTemplate = redisTemplate;
   }
 
-  @EventListener
-  public void popWaitingQueue(CallingEvent callingDto) {
-    log.info("popWaitingQueue");
-
-    Set<String> keys = redisTemplate.keys("*" + WAITING_QUEUE_SUFFIX);
-
-    if (keys != null && keys.size() > 0) {
-      keys.stream()
-          .filter(key -> {
-            Long size = redisTemplate.opsForList().size(key);
-            return size != null && size > 0;
-          })
-          .map(key -> {
-            String userId = redisTemplate.opsForList().leftPop(key);
-            String[] shopKey = key.split("-");
-
-            sendJsonMessage(Long.valueOf(shopKey[0]), "ok");
-
-            return new DoneEvent(Long.parseLong(shopKey[0]), Long.parseLong(userId));
-          })
-          .forEach(eventPublisher::publishEvent);
+  public Long addQueue(String shopId, String customerId) {
+    String lockName = "lock:shop:" + shopId;
+    RLock lock = redissonClient.getLock(lockName);
+    Long position = null;
+    try {
+      boolean isLocked = lock.tryLock(10, 60, TimeUnit.SECONDS);
+      if (isLocked) {
+        // 락 획득
+        ListOperations<String, String> listOps = redisTemplate.opsForList();
+        position = listOps.leftPush(shopId, customerId);
+        System.out.println("add queue");
+      }
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    } finally {
+      lock.unlock();
     }
+    return position;
   }
 
-  @TransactionalEventListener
-  public void removeWaitingQueue(CancelEvent cancelEvent) {
-    Long shopId = cancelEvent.getShopId();
-    Long userId = cancelEvent.getUserId();
-
-    log.info("removeWaitingQueue:: shopId = {}, userId = {}", shopId, userId);
-
-    redisTemplate.opsForList()
-        .remove(shopId + WAITING_QUEUE_SUFFIX, 0, String.valueOf(userId));
-
-    sendJsonMessage(shopId, "ok");
-
+  public String popQueue(String shopId) {
+    String lockName = "lock:shop:" + shopId;
+    RLock lock = redissonClient.getLock(lockName);
+    String customerId = null;
+    try {
+      boolean isLocked = lock.tryLock(10, 60, TimeUnit.SECONDS);
+      if (isLocked) {
+        // 락 획득
+        ListOperations<String, String> listOps = redisTemplate.opsForList();
+        customerId = listOps.rightPop(shopId);
+      }
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    } finally {
+      lock.unlock();
+    }
+    return customerId;
   }
 
-  public Long getWaitingQueueSize(Long shopId) {
-    Long size = redisTemplate.opsForList()
-        .size(shopId + WAITING_QUEUE_SUFFIX);
-    return size == null ? 0 : size;
+  public Long queueSize(String storeId){
+    ListOperations<String, String> listOps = redisTemplate.opsForList();
+    return listOps.size(storeId);
+  }
+
+  public List<String> fetchAllKeys() {
+    List<String> keysList = new ArrayList<>();
+    redisTemplate.execute((RedisConnection connection) -> {
+      Cursor<byte[]> cursor = connection.scan(ScanOptions.scanOptions().match("*").count(1000).build());
+      while (cursor.hasNext()) {
+        keysList.add(new String(cursor.next()));
+      }
+      return null;
+    });
+    return keysList;
   }
 
 
