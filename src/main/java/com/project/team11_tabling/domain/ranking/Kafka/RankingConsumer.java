@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.ranking;
+package com.project.team11_tabling.domain.ranking.Kafka;
 
 import com.project.team11_tabling.domain.notification.Kafka.ShopMessage;
 

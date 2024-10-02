@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.ranking;
+package com.project.team11_tabling.domain.ranking.ElasticSearch;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.*;
