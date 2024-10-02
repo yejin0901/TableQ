@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.wish.dto.response;
+package com.project.team11_tabling.domain.wish.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.review.dto.request;
+package com.project.team11_tabling.domain.review.dto;
 
 import lombok.Getter;
 

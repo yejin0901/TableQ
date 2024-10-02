@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.wish.dto.response;
+package com.project.team11_tabling.domain.wish.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

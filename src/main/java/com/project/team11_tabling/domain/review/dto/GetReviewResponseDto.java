@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.review.dto.response;
+package main.java.com.project.team11_tabling.domain.review.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

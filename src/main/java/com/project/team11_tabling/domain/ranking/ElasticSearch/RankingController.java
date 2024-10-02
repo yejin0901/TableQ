@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.ranking;
+package com.project.team11_tabling.domain.ranking.ElasticSearch;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

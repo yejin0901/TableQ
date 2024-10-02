@@ -1,4 +1,4 @@
-package com.project.team11_tabling.domain.ranking;
+package com.project.team11_tabling.domain.ranking.ElasticSearch;
 
 import com.team10.temp.domain.shop.Shop;
 import jakarta.persistence.Id;
