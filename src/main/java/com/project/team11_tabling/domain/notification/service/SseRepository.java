@@ -1,15 +1,16 @@
-package com.project.team11_tabling.domain.alarm.repository;
+package com.project.team11_tabling.domain.notification.service;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+
 @Repository
 @RequiredArgsConstructor
-public class AlarmSseEmitterRepository {
-
+public class SseRepository {
   private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 
   public void save(Long id, SseEmitter emitter) {
@@ -23,5 +24,4 @@ public class AlarmSseEmitterRepository {
   public SseEmitter get(Long userId) {
     return emitters.get(userId);
   }
-
 }
