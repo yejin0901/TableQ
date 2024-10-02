@@ -9,6 +9,7 @@ import com.project.team11_tabling.global.jwt.security.UserDetailsImpl;
 import com.project.team11_tabling.global.response.CommonResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import com.project.team11_tabling.domain.ranking.ShopRankingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,12 +27,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReviewController {
 
   private final ReviewService reviewService;
+  private final ShopRankingService shopRankingService;
 
   // 리뷰 생성
   @PostMapping
   public void createReviews(@AuthenticationPrincipal UserDetailsImpl userDetails,
       @RequestBody ReviewCreateRequestDto reviewCreateRequestDto) {
     reviewService.createReview(userDetails.getUserId(), reviewCreateRequestDto);
+    shopRankingService.incrementReviewCount(
+            String.valueOf(reviewRequestDto.getShopId()), "shops"
+    );
   }
 
   // 리뷰 수정
