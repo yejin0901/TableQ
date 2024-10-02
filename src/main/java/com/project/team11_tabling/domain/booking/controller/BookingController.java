@@ -2,7 +2,6 @@ package com.project.team11_tabling.domain.booking.controller;
 
 import com.project.team11_tabling.domain.booking.dto.BookingRequest;
 import com.project.team11_tabling.domain.booking.dto.BookingResponse;
-import com.project.team11_tabling.domain.booking.service.BookingService;
 import com.project.team11_tabling.global.jwt.security.UserDetailsImpl;
 import com.project.team11_tabling.global.response.CommonResponse;
 import jakarta.validation.Valid;

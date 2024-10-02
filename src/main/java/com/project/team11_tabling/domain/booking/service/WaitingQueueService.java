@@ -1,4 +1,4 @@
-package com.project.team11_tabling.global.redis;
+package com.project.team11_tabling.domain.booking.service;
 
 
 import com.project.team11_tabling.domain.shop.service.redisMessage.RealtimeWaitingDataService;
@@ -30,11 +30,6 @@ public class WaitingQueueService {
   private final RedisTemplate<String, String> redisTemplate;
   private final RedissonClient redissonClient;
   private final RealtimeWaitingDataService realtimeWaitingDataService;
-
-  public WaitingQueue(RedissonClient redissonClient, RedisTemplate<String, String> redisTemplate) {
-    this.redissonClient = redissonClient;
-    this.redisTemplate = redisTemplate;
-  }
 
   public Long addQueue(String shopId, String customerId) {
     String lockName = "lock:shop:" + shopId;
@@ -74,6 +69,35 @@ public class WaitingQueueService {
     }
     return customerId;
   }
+
+  public Long removeQueue(String shopId, String customerId) {
+    String lockName = "lock:shop:" + shopId;
+    RLock lock = redissonClient.getLock(lockName);
+    Long removedPosition = null;
+    try {
+      boolean isLocked = lock.tryLock(10, 60, TimeUnit.SECONDS);
+      if (isLocked) {
+        // 락 획득
+        ListOperations<String, String> listOps = redisTemplate.opsForList();
+
+        // Redis 리스트에서 고객 ID 제거
+        Long queueSizeBefore = listOps.size(shopId);
+        listOps.remove(shopId, 1, customerId); // 특정 customerId 제거
+        Long queueSizeAfter = listOps.size(shopId);
+
+        removedPosition = queueSizeBefore - queueSizeAfter; // 제거된 순서 계산
+
+        System.out.println("remove queue");
+      }
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    } finally {
+      lock.unlock();
+    }
+    return removedPosition;
+  }
+
+
 
   public Long queueSize(String storeId){
     ListOperations<String, String> listOps = redisTemplate.opsForList();

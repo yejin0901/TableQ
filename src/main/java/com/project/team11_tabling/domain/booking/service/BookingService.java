@@ -1,19 +1,44 @@
 package com.project.team11_tabling.domain.booking.service;
 
-import com.project.team11_tabling.domain.booking.dto.BookingRequest;
-import com.project.team11_tabling.domain.booking.dto.BookingResponse;
-import com.project.team11_tabling.global.jwt.security.UserDetailsImpl;
-import java.util.List;
 
-public interface BookingService {
+import lombok.RequiredArgsConstructor;
+import com.project.team11_tabling.domain.booking.entity.BookingType;
+import com.project.team11_tabling.domain.booking.entity.Booking;
+import com.project.team11_tabling.domain.booking.repository.BookingRepository;
 
-  BookingResponse booking(BookingRequest request, UserDetailsImpl userDetails);
+@Service
+@RequiredArgsConstructor
+public class BookingService {
+    private static final String SUCCESS_WAITING = "님 웨이팅이 등록되었습니다"; //나중에 메시지 만들기
+    private final WaitingQueueService queue;
+    private final BookingRepository bookingRepository;
 
-  BookingResponse cancelBooking(Long bookingId, UserDetailsImpl userDetails);
+    public void registerWaiting(Long userId, Long shopId) {
+        bookingRepository.save(new Booking(shopId, userId, BookingType.WAITING));
+        queue.addQueue(shopId.toString(), userId.toString());
+    }
 
-  List<BookingResponse> getMyBookings(UserDetailsImpl userDetails);
+    public void completeWaiting(Long userId, Long shopId) {
+        bookingRepository.save(new Booking(shopId, userId, BookingType.DONE));
+        queue.popQueue(shopId.toString());
+    }
 
-  BookingResponse noShow(Long bookingId, UserDetailsImpl userDetails);
+    public void cancelWaiting(Long waitingId) {
+        Booking waiting = findWaiting(waitingId);
+        queue.removeElement(
+                String.valueOf(waiting.getShopId()),
+                String.valueOf(waiting.getUserId())
+        );
+        waiting.updateStatus(BookingType.CANCEL);
+    }
 
-  BookingResponse getShopBooking(Long shopId, UserDetailsImpl userDetails);
+    public Long getWaitingInfo(Long shopId) {
+        return queue.queueSize(String.valueOf(shopId));
+    }
+
+    public Booking findWaiting(Long waitingId) {
+        return bookingRepository.findById(waitingId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 웨이팅 정보가 없습니다."));
+    }
+
 }
