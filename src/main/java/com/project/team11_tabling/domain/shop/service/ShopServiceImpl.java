@@ -8,7 +8,7 @@ import com.project.team11_tabling.domain.shop.externalAPI.KakaoAPI;
 import com.project.team11_tabling.domain.shop.externalAPI.KakaoResponseDTO;
 import com.project.team11_tabling.domain.shop.repository.ShopRepository;
 import com.project.team11_tabling.domain.shop.repository.ShopSeatsRepository;
-import com.project.team11_tabling.global.redis.WaitingQueueService;
+import com.project.team11_tabling.domain.booking.service.WaitingQueueService;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +29,14 @@ public class ShopServiceImpl implements ShopService {
   private final ShopSeatsRepository shopSeatsRepository;
   private final WaitingQueueService waitingQueueService;
 
-  @Cacheable(value = USER_CACHE, key = "#search")
+    public ShopServiceImpl(KakaoAPI kakaoAPI, ShopRepository shopRepository, ShopSeatsRepository shopSeatsRepository, WaitingQueueService waitingQueueService) {
+        this.kakaoAPI = kakaoAPI;
+        this.shopRepository = shopRepository;
+        this.shopSeatsRepository = shopSeatsRepository;
+        this.waitingQueueService = waitingQueueService;
+    }
+
+    @Cacheable(value = USER_CACHE, key = "#search")
   public KakaoResponseDTO getAPI(String search) {
     KakaoResponseDTO response = kakaoAPI.getAPI(search);
     return response;

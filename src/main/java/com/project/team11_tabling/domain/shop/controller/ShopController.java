@@ -2,20 +2,17 @@ package com.project.team11_tabling.domain.shop.controller;
 
 
 
-import com.project.team11_tabling.domain.shop.service.redisMessage.RealtimeWaitingDataService;
-
-
 import com.project.team11_tabling.domain.shop.service.ShopService;
 import com.project.team11_tabling.domain.shop.dto.ShopRequestDto;
 import com.project.team11_tabling.domain.shop.dto.ShopResponseDto;
 import com.project.team11_tabling.domain.shop.externalAPI.KakaoResponseDTO;
 import com.project.team11_tabling.domain.shop.service.redisMessage.RedisSubscriber;
 import com.project.team11_tabling.domain.shop.service.redisMessage.ShopTopicRepository;
-import com.project.team11_tabling.global.redis.WaitingQueueService;
 import com.project.team11_tabling.global.response.CommonResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import com.project.team11_tabling.domain.ranking.ShopRankingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,6 +35,8 @@ public class ShopController {
 
   private final RedisSubscriber redisSubscriber;
   private final ShopTopicRepository shopTopicRepository;
+
+  private final ShopRankingService shopRankingService;
 
 
   @CrossOrigin(origins = "http://localhost:3000")
@@ -62,8 +61,9 @@ public class ShopController {
   @GetMapping("/{shopId}")
   public ResponseEntity<CommonResponse<ShopResponseDto>> getShopInfo(
       @PathVariable Long shopId) {
-
     ShopResponseDto responseDto = shopService.getShopInfo(shopId);
+    shopRankingService.incrementViewCount(String.valueOf(shopId), "shops");
+
     return ResponseEntity.status(HttpStatus.OK.value())
         .body(CommonResponse.<ShopResponseDto>builder()
             .data(responseDto)

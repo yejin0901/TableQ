@@ -3,6 +3,8 @@ package com.project.team11_tabling.domain.shop.service.redisMessage;
 import com.project.team11_tabling.domain.shop.service.redisMessage.RedisSubscriber;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -15,19 +17,34 @@ import org.springframework.stereotype.Repository;
 @Slf4j(topic = "topic repository")
 public class ShopTopicRepository {
   private Map<String, ChannelTopic> topics = new HashMap<>();
-
   private final RedisMessageListenerContainer container;
-  private final RedisSubscriber redisSubscriber;
+  private Map<String, String> userSubscriptions = new ConcurrentHashMap<>();
 
 
-  public void enterShopId(String roomId) {
+  public void enterShopId(String shopId, String userId) {
     ChannelTopic topic;
-    if (topics.get(roomId) == null) {
+    if (topics.get(shopId) == null) {
       log.info("topic 생성");
-      topic = new ChannelTopic(roomId);
-      topics.put(roomId, topic);
+      topic = new ChannelTopic(shopId);
+      topics.put(shopId, topic);
       initializeListeners(topic);
     }
+    userSubscriptions.put(userId, shopId);
+    log.info("userId {} is subscribed to shopId {}", userId, shopId);
+  }
+
+  public void leaveShopByUser(String shopId, String userId) {
+    String shop = userSubscriptions.get(userId);
+    if (shopId != null) {
+      if (shop.isEmpty()) {
+        userSubscriptions.remove(userId);
+      }
+      log.info("userId {} has unsubscribed from shopId {}", userId, shopId);
+    }
+  }
+
+  public String getSubscribedRoomByUser(String userId) {
+    return userSubscriptions.get(userId);
   }
 
   public ChannelTopic getTopic(String shopId){
