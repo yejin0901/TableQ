@@ -69,14 +69,21 @@
 *********************
 https://www.notion.so/teamsparta/95d714c807b54d14ba240434fff454d8
 
-### 📐 와이어프레임
+### 📐 와이어프레임 & 실제화면
 
 ****************
 <div align="center">
-    <img src="https://github.com/team11-tabling/Team11/assets/61917664/3634bfad-9641-4de3-9932-e6bc929c5ed4"  width="50%" alt="">
-    <img src="https://github.com/team11-tabling/Team11/assets/61917664/051fdaa4-b0d1-4f56-aad0-7d099710ff24"  width="50%" alt="">
-    <img src="https://github.com/team11-tabling/Team11/assets/61917664/7a95e458-2af0-4d41-90f6-25f45e7666f3"  width="35%">
+    <img src="https://github.com/user-attachments/assets/15e05e3b-762b-455a-ac04-c8b901bddccd"  width="80%" alt="">
+</div><br><br><br>
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/7e948dca-5ca9-4fa3-9e44-1fdb26279033"  width="60%" alt="">
 </div>
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/637245bf-b9b3-4c73-b534-366b56cccd8d"  width="60%" alt="">
+</div>
+
+
+
 
 ### 🗂️ ERD DIAGRAM
 
