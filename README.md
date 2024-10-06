@@ -4,12 +4,12 @@
 
 <a name="readme-top"></a>
 <div align="center">
-<h1 align="center">tabling</h1>
+<h1 align="center">tableQ</h1>
     <p align="center">
         식당 대기열 예약/정보공유 통합 플랫폼
     </p>
     <p align="center">
-        2024.03.26 ~ 2024.04.30
+        2024.03.26 ~ 2024.07.05
     </p>
 </div>
 
@@ -22,16 +22,18 @@
 - <img src="https://img.shields.io/badge/Build-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=Gradle&logoColor=white"><img src="https://img.shields.io/badge/8.5-515151?style=for-the-badge">
 - <img src="https://img.shields.io/badge/Language-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"><img src="https://img.shields.io/badge/17-515151?style=for-the-badge">
 - <img src="https://img.shields.io/badge/DataBase-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/8.3-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/React-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"><img src="https://img.shields.io/badge/18.2.0-515151?style=for-the-badge">
-- <img src="https://img.shields.io/badge/Node.js-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"><img src="https://img.shields.io/badge/16.20.2-515151?style=for-the-badge">
+- <img src="https://img.shields.io/badge/Framework-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"><img src="https://img.shields.io/badge/18.2.0-515151?style=for-the-badge"><br>
+- <img src="https://img.shields.io/badge/Framework-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"><img src="https://img.shields.io/badge/16.20.2-515151?style=for-the-badge"><br>
+- <img src="https://img.shields.io/badge/Other-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/Elastic_Search-005571?style=for-the-badge&logo=elasticsearch&logoColor=white"><img src="https://img.shields.io/badge/8.11.4-515151?style=for-the-badge"><br>
+- <img src="https://img.shields.io/badge/DataBase-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white"><img src="https://img.shields.io/badge/7.0.8-515151?style=for-the-badge">
+- <img src="https://img.shields.io/badge/Other-%23121011?style=for-the-badge"><img src="https://img.shields.io/badge/Apache%20Kafka-000?style=for-the-badge&logo=apachekafka"><img src="https://img.shields.io/badge/3.7.0-515151?style=for-the-badge">
 
 
 ### 서비스 아키텍쳐
 
 *********************
-![image](https://github.com/team11-tabling/Team11/assets/61917664/2aba53fe-a951-4940-a3af-c7d715f54dd9)
 
-
+<img src="https://github.com/user-attachments/assets/9fd525c4-dcc1-4c01-bf21-ff6378a13156"  width="80%">
 
 ### ⚙ 기능구현
 
@@ -44,6 +46,8 @@
 - [x]  **즐겨찾기 기능**
 - [x]  **이용내역 조회기능**
 - [x]  **배치 스케줄링**
+- [x]  **대기인원 수 모니터링**
+
 
       
 ### 👩🏼‍🤝‍👩🏼 멤버 구성
@@ -78,6 +82,7 @@ https://www.notion.so/teamsparta/95d714c807b54d14ba240434fff454d8
 
 *****************
 <div align="center">
-    <img src="https://github.com/team11-tabling/Team11/assets/61917664/f934498e-e469-40e6-b654-cdd14960911c"  width="80%">
+    <img src="https://github.com/user-attachments/assets/57397d8b-e327-40b0-b744-2a961d32b38e"  width="80%">
 </div>
+
 
