@@ -31,7 +31,7 @@ public class NotificationConsumer {
   private final WaitingQueueService waitingQueueService;
 
 
-  @KafkaListener(topics = "seat", groupId = "notification-group")
+  @KafkaListener(topics = "seat", groupId = "notification-group", concurrency = "5")
   public void listenNotification(String jsonMessage) {
 
     try {

@@ -9,7 +9,7 @@ public class RankingConsumer {
 
     private final ShopRankingService shopRankingService;
 
-    @KafkaListener(topics = "seat", groupId = "ranking-group")
+    @KafkaListener(topics = "seat", groupId = "ranking-group", concurrency = "5")
     public void listenEntry2(String jsonMessage) {
 
         try {
